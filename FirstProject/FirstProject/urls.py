@@ -19,4 +19,17 @@ from FirstApp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home),
+    path('ht/',views.ht),
+    path('u/<str:uname>/',views.usernameprint),
+    path('us/<str:uname>/<int:age>/',views.us),
+    path('emp/<str:eid>/<int:eage>/<str:ename>',views.empdetails),
+    path('qw/',views.htm),
+    path('yt/<str:uname>/',views.html),
+    path('de/<str:uname>/<int:id>/',views.details),
+    path('pt/<int:id>/<str:ename>/',views.empname),
+    path('stud/',views.studentdetails),
+    path('internalJS/',views.internalJS),
+    path('myform/',views.myform,name='myform'),
+    path('register/',views.reg,name='register'),
+    path('login/',views.log,name='login'),
 ]
