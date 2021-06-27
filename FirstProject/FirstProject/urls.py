@@ -32,4 +32,11 @@ urlpatterns = [
     path('myform/',views.myform,name='myform'),
     path('register/',views.reg,name='register'),
     path('login/',views.log,name='login'),
+    path('btrg/',views.btregi,name="btr"),
+    path('newreg/',views.newreg,name='newreg'),
+    path('register1/',views.register1),
+    path('display/',views.display,name='dt'),
+    path('viw/<int:y>/',views.sview,name="sv"),
+    path('upu/<int:q>/',views.supt,name="sup"),
+    path('snd/<int:p>/',views.sndl,name="del"),
 ]

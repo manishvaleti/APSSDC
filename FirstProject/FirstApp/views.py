@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
+from .models import Register
 # Create your views here.
 def home(request):
     return HttpResponse("Hello World")
@@ -49,7 +50,7 @@ def reg(req):
         phone=req.POST['phone']
         gender=req.POST['gender']
         address=req.POST['address']
-        language=req.POST['language']
+        language=req.POST.getlist('language')
         hob=req.POST['hob']
         regdata = {'firstname':fn,'lastname':ln,'email':email,'number':phone,'gender':gender,'address':address,'language':language,'hobbies':hob}
         return render(req,'html/output.html',regdata)
@@ -65,3 +66,47 @@ def log(req):
             return HttpResponse("<h3><script>alert('Invalid')</script></h3>")
     
     return render(req,'html/login.html')
+
+def btregi(request):
+    return render(request,'html/btregest.html')
+
+
+def newreg(request):
+    if request.method=="POST":
+        fn = request.POST['n']
+        email=request.POST['email']
+        reg=Register(name=fn,email=email)
+        reg.save()
+        return HttpResponse("<h3><script>alert('Row inserted successfully')</script></h3>")
+    return render(request,'html/newreg.html')
+
+def register1(request):
+    reg=Register(name="Sidy",email="sidy@gmail.com")
+    reg.save()
+    return HttpResponse("Data insertion successful")
+
+def display(request):
+    data=Register.objects.all()
+    return render(request,'html/display1.html',{'data':data})
+def sview(request,y):
+    w = Register.objects.get(id=y)
+    return render(request,'html/sview.html',{'y':w})
+    #return HttpResponse("Your Name is : {} and your email id is: {}".format(w.name,w.email))
+
+def supt(request,q):
+    t=Register.objects.get(id=q)
+    if request.method == "POST":
+        na = request.POST['n']
+        em = request.POST['e']
+        t.name=na
+        t.email=em
+        t.save()
+        return redirect('/display/')
+    return render(request,'html/supdate.html',{'p':t})
+
+def sndl(request,p):
+    b = Register.objects.get(id=p)
+    if request.method == "POST":
+        b.delete()
+        return redirect('/display/')
+    return render(request,'html/sndlt.html',{'z':b})
