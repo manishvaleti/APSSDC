@@ -1,0 +1,60 @@
+{% load static %}
+<div class="container-fluid mr-none ml-none bg-dark mt-5">
+    <table class="table table-borderless text-white text-left ml-5">
+        <thead>
+          <tr>
+            <th>BK INFO</th>
+            <th>CONTACT</th>
+            <th>BK CARES</th>
+            <th>LEGAL</th>
+            <th>OUR APPS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>About BK</td>
+            <td>Help & Support</td>
+            <td>Nutrition Information</td>
+            <td>Terms And Conditions</td>
+            <td><a href="https://apps.apple.com/us/app/burger-king-india/id1516627543"><img src="{% static 'img/ios.png' %}" alt=""></a></td>
+          </tr>
+          <tr>
+            <td>Fresh Taste</td>
+            <td class="text-left ml-2">Write to us:</td>
+            <td>Creating Brighter Futures</td>
+            <td>Privacy Policy</td>
+            <td><a href="https://play.google.com/store/apps/details?id=in.burgerking.android"><img src="{% static 'img/play.png' %}" alt=""></a></td>
+          </tr>
+          <tr>
+            <td>Investor Relations</td>
+            <td><ul type=none class="text-left ml-2">
+                <li>Careers</li>
+                <li>Customer Care</li>
+                <li>Supply Chain Queries</li>
+                <li>Investor Relations</li>
+                <li>Corporate Communications</li>
+                <li>Franchising</li>
+            </ul></td>
+            <td>Trust & Taste</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="container text-white mr-none ml-none">
+        <hr>
+        <div class="row">
+            <div class="col ml-5">
+                <a href="{% url 'hm' %}"><img src="{% static 'img/logo2.png' %}" alt="" ></a>
+            </div>
+            <div class="col text-center" style="padding-left: 150px; position:static">
+                <h6>TM & Copyright 2021 Manish Imports and Exports Limited. All Rights Reserved</h6>
+            </div>
+           
+            <div class="col" style="padding-left: 250px; position: relative;">
+              <img src="{% static 'img/f.svg' %}" alt="">
+              <img src="{% static 'img/i.svg' %}" alt="">
+              <img src="{% static 'img/t.svg' %}" alt="">
+              <img src="{% static 'img/y.svg' %}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
