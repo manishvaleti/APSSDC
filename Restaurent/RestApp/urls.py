@@ -6,4 +6,5 @@ urlpatterns=[
     path('cnt/',views.contact,name="ct"),
     path('rlist/',views.restlist,name="rstl"),
     path('rstup/<int:m>/',views.rstup,name="rsup"),
+    path('rstdel/<int:m>/',views.rstdel,name="rstdel")
 ]
