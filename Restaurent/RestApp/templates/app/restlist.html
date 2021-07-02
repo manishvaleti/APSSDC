@@ -2,10 +2,18 @@
 {% block title %}Restaurent List {% endblock %}
 {% block content %}
 <div class="container mt-4">
+{% if messages %}
+{% for m in messages %}
+<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{m}}
+</div>
+{% endfor %}
+{% endif %}
     <div class="row">
-        <div class="card col-md-4 shawdow-lg mx-2">
+        <div class="card col-md-4 shawdow-lg mx-2 h-100">
             <div class="card-body ">
-                <form action="" method="POST">
+                <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                 
                 <h3 class="text-center text-success bg-dark p-2 border rounded">Add Restaurent</h3>
@@ -39,7 +47,7 @@
                     {% for k in a %}
                     <tr>
                         <td>{{forloop.counter}}</td>
-                        <td>{{k.Rname}}</td>
+                        <td><a href="{% url 'rsvw' k.id %}">{{k.Rname}}</a></td>
                         <td>{{k.nitems}}</td>
                         <td>{{k.time}}</td>
                         <td><a href="{% url 'rsup' k.id %}" class="btn btn-outline-warning mx-2">Update</a><a href="{% url 'rstdel' k.id %}" class="btn btn-outline-danger mx-2">Delete</a></td>

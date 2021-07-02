@@ -7,4 +7,4 @@ class Restaurents(models.Model):
     nitems=models.IntegerField()
     time=models.CharField(max_length=50)
     address = models.CharField(max_length=50)
-
+    rsimg=models.ImageField(upload_to='RestaurentImages/',default='bk.jpg')
