@@ -1,4 +1,6 @@
+
 from django.db import models
+from django.contrib.auth.models import User
 from django.db.models.fields import CharField
 
 # Create your models here.
@@ -8,7 +10,7 @@ class Restaurents(models.Model):
     time=models.CharField(max_length=50)
     address = models.CharField(max_length=50)
     rsimg=models.ImageField(upload_to='RestaurentImages/',default='bk.jpg')
-    
+    uid = models.ForeignKey(User,on_delete=models.CASCADE)
     def __str__(self):
         return self.Rname + " "+str(self.nitems)
 
@@ -25,3 +27,4 @@ class Itemlist(models.Model):
     Iprice=models.DecimalField(decimal_places=2,max_digits=10)
     Iavailability=models.CharField(max_length=50,choices=p,default='NA')
     Iimage=models.ImageField(upload_to='ItemImages/',default='bk.jpg')
+    rsid = models.ForeignKey(Restaurents, on_delete=models.CASCADE)

@@ -8,7 +8,7 @@ from django.contrib.auth.forms import UserCreationForm
 class ReForm(forms.ModelForm):
     class Meta:
         model = Restaurents
-        fields = "__all__"
+        fields = fields = ["Rname","nitems","time","rsimg","address"]
         widgets = {
             "Rname":forms.TextInput(attrs={
                 "class":"form-control my-2",
@@ -33,8 +33,11 @@ class ReForm(forms.ModelForm):
 class IForm(forms.ModelForm):
     class Meta:
         model=Itemlist
-        fields="__all__"
+        fields=["rsid","Iname","Icategory","Iprice","Iavailability","Iimage"]
         widgets={
+            "rsid":forms.Select(attrs={
+                "class":"form-control my-2",
+            }),
             "Iname":forms.TextInput(attrs={
                 "class":"form-control my-2",
                 "placeholder":"Enter Item Name"

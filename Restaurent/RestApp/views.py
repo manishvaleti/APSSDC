@@ -16,10 +16,13 @@ def contact(request):
     return render(request,'app/contact.html')
 @login_required
 def restlist(request):
-    y=Restaurents.objects.all()
+    y=Restaurents.objects.filter(uid_id=request.user.id)
     if request.method =="POST":
         t = ReForm(request.POST,request.FILES)
         if t.is_valid():
+            c = t.save(commit=False)
+            c.uid_id= request.user.id
+            c.save()
             t.save()
             messages.success(request,"Restaurent Added Successfully")
             return redirect('/rlist')
@@ -51,11 +54,20 @@ def rstvw(request,a):
     return render(request,'app/restview.html',{'z':s})
 
 def vx(request):
-    s=Restaurents.objects.all()
+    s=Restaurents.objects.filter(uid_id=request.user.id)
     return render(request,'app/v.html',{"a":s})
 @login_required
 def itlist(request):
-    y=Itemlist.objects.all()
+    st = list(Restaurents.objects.filter(uid_id=request.user.id))
+    mm = Itemlist.objects.all()
+    d,i={},0
+    for mp in mm:
+        for h in st:
+            if h.id == mp.rsid_id:
+                d[i] = mp.Iname,mp.Icategory,mp.Iprice,mp.Iimage,mp.Iavailability,mp.id,h.Rname
+                i=i+1
+
+    # y=Itemlist.objects.all()
     if request.method == "POST":
         k = IForm(request.POST,request.FILES)
         if k.is_valid():
@@ -64,14 +76,14 @@ def itlist(request):
             messages.success(request,'{} Item is Added successfully'.format(n.Iname))
             return redirect('/ilist/')
     k=IForm()
-    return render(request,'app/itmlist.html',{'r':k,'a':y})
+    return render(request,'app/itmlist.html',{'r':k,'er':st,'a':d.values()})
 
 def usrreg(request):
     if request.method=="POST":
         d = UsgForm(request.POST)
         if d.is_valid():
             d.save()
-            return redirect('/usrreg')
+            return redirect('/login')
     d = UsgForm()
     return render(request,'app/usrregister.html',{'t':d})
 
@@ -94,3 +106,6 @@ def itdel(request,m):
         return redirect('/ilist')
     e=IForm(instance=r)
     return render(request,'app/itdel.html',{'a':e})
+def ivw(request,a):
+    s=Itemlist.objects.get(id=a)
+    return render(request,'app/iview.html',{'z':s})

@@ -9,7 +9,7 @@
 </div>
 {% endfor %}
 {% endif %}
-<div class="container mt-4">
+<div class="container-fluid mt-4">
     <div class="row">
         <div class="card col col-md-4 mx-2 shawdow-lg">
             <div class="card-body">
@@ -17,7 +17,15 @@
                 <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     {% for n in r %}
+                    {% if forloop.counter == 1 %}
+                        <select name="rsid" class="form-control">
+                            {% for j in er %}
+                            <option value="{{j.id}}">{{j}}</option>
+                            {% endfor %}
+                        </select>
+                    {% elif forloop.counter >= 2 %}
                     <div>{{n}}</div>
+                    {% endif %}
                     {% endfor %}
                     <div class="row">
                         <div class="col">
@@ -37,6 +45,7 @@
                 <table class="table table-borderless table-hover">
                     <tr class="bg-dark text-light">
                         <th>S.No</th>
+                        <th>Restaurant Name</th>
                         <th>Item Name</th>
                         <th>Category</th>
                         <th>Price</th>
@@ -46,22 +55,23 @@
                     {% for k in a %}
                     <tr>
                         <td>{{forloop.counter}}</td>
-                        <td><a href="#">{{k.Iname}}</a></td>
-                        <td>{% if k.Icategory == 'veg' %}
+                        <td>{{k.6}}</td>
+                        <td><a href="{% url 'ivw' k.5 %}">{{k.0}}</a></td>
+                        <td>{% if k.1 == 'veg' %}
                             <span class="badge badge-success">Veg</span>
                             {% else %}
                             <span class="badge badge-danger">Non-Veg</span>
                             {% endif %}
                         </td>
-                        <td>{{k.Iprice}}</td>
+                        <td>{{k.2}}</td>
                         <td>
-                            {% if k.Iavailability == 'AV' %}
+                            {% if k.4 == 'AV' %}
                             <span class="badge badge-success">Available</span>
                             {% else %}
                             <span class="badge badge-danger">Not available</span>
                             {% endif %}
                         </td>
-                        <td><a href="{% url 'iup' k.id%}" class="btn btn-outline-warning mx-1">Update</a><a href="{% url 'idel' k.id%}" class="btn btn-outline-danger mx-1">Delete</a></td>
+                        <td><a href="{% url 'iup' k.5 %}" class="btn btn-outline-warning mx-1">Update</a><a href="{% url 'idel' k.5 %}" class="btn btn-outline-danger mx-1">Delete</a></td>
                     </tr>
                     {% endfor %}
                 </table>

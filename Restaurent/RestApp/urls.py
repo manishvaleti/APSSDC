@@ -16,4 +16,5 @@ urlpatterns=[
     path('logout/',vs.LogoutView.as_view(template_name="app/logout.html"),name="lgo"),
     path('iup/<int:m>/',views.itup,name="iup"),
     path('idel/<int:m>/',views.itdel,name="idel"),
+    path('iviw/<int:a>/',views.ivw,name="ivw"),
 ]
