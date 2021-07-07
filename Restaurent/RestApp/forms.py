@@ -1,9 +1,9 @@
 from django.db.models import fields
 from django.forms import ModelForm, widgets
 from django.forms.models import model_to_dict
-from RestApp.models import Restaurents,Itemlist
+from RestApp.models import Restaurents,Itemlist,User,Rolereq
 from django import forms
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 class ReForm(forms.ModelForm):
     class Meta:
@@ -73,5 +73,19 @@ class UsgForm(UserCreationForm):
             "username":forms.TextInput(attrs={
                 "class":"form-control my-2",
                 "placeholder":"Enter Username",
+            })
+        }
+        
+class Rltype(forms.ModelForm):
+    class Meta:
+        model = Rolereq
+        fields= ["uname","rltype","pfe"]
+        widgets= {
+            # "uname":forms.TextInput(attrs={
+            #     "class":"form-control my-2",
+            #     "readonly":True,
+            # }),
+            "rltype":forms.TextInput(attrs={
+                "class":"form-control my-2"
             })
         }

@@ -129,3 +129,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'lg'
 LOGIN_REDIRECT_URL = 'hm'
+
+AUTH_USER_MODEL = 'RestApp.User'

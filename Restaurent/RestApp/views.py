@@ -1,7 +1,7 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from RestApp.forms import ReForm,IForm,UsgForm
+from RestApp.forms import ReForm,IForm, Rltype,UsgForm
 from RestApp.models import Itemlist, Restaurents
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -109,3 +109,11 @@ def itdel(request,m):
 def ivw(request,a):
     s=Itemlist.objects.get(id=a)
     return render(request,'app/iview.html',{'z':s})
+@login_required
+def rolereq(request):
+    k = Rltype()
+    return render(request,'app/rolereq.html',{'d':k})
+
+@login_required
+def gveperm(request):
+    return render(request,'app/gvper.html')

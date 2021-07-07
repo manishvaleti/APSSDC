@@ -2,6 +2,7 @@
 {% block title %}Restaurant Carrosal view{% endblock %}
 {% block content %}
 <div class="container-fluid">
+  {% if user.role == 2 %}
     <div class="row mx-3 mt-3">
       <div class="col-md-7">
         <h3>Carousel</h3>
@@ -35,6 +36,14 @@
       {% endfor %}
       
     </div>
-
+    {% elif user.is_superuser %}
+    <div class="jumbotron col-md-6 mx-auto shadow-lg mt-4">
+      <h3>You are in Admin</h3>
+    </div>
+    {% else %}
+    <div class="jumbotron col-md-6 mx-auto shadow-lg mt-4">
+      <h3>You are in Guest Account</h3>
+    </div>
+    {% endif %}
   </div>
 {% endblock %}

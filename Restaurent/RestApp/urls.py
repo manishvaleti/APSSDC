@@ -17,4 +17,6 @@ urlpatterns=[
     path('iup/<int:m>/',views.itup,name="iup"),
     path('idel/<int:m>/',views.itdel,name="idel"),
     path('iviw/<int:a>/',views.ivw,name="ivw"),
+    path('roltype/',views.rolereq,name="rlrq"),
+    path('gvper/',views.gveperm, name="gvpm")
 ]
