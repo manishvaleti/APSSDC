@@ -18,5 +18,11 @@ urlpatterns=[
     path('idel/<int:m>/',views.itdel,name="idel"),
     path('iviw/<int:a>/',views.ivw,name="ivw"),
     path('roltype/',views.rolereq,name="rlrq"),
-    path('gvper/',views.gveperm, name="gvpm")
+    path('gvper/',views.gveperm, name="gvpm"),
+    path('gvup/<int:t>/',views.gvupd,name="gvup"),
+    path('pfle/',views.pfle,name="pf"),
+    path('pfupd/',views.pfupd,name="pfud"),
+    path('fdb/',views.feedback,name="fd"),
+    path('reqdel/<int:t>',views.reqdel,name="rd"),
+    path('chpd/',views.changepwd,name="chpd"),
 ]

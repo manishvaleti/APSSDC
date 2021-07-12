@@ -1,10 +1,12 @@
 from django.http.response import HttpResponse
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from RestApp.forms import ReForm,IForm, Rltype,UsgForm
-from RestApp.models import Itemlist, Restaurents
+from RestApp.forms import ReForm,IForm, Rltype, Rlupd,UsgForm,Pfupd,Chgepwd
+from RestApp.models import Itemlist, Restaurents, Rolereq, User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from Restaurent import settings
+from django.core.mail import send_mail
 # Create your views here.
 def home(request):
     return render(request,'app/home.html')
@@ -55,7 +57,8 @@ def rstvw(request,a):
 
 def vx(request):
     s=Restaurents.objects.filter(uid_id=request.user.id)
-    return render(request,'app/v.html',{"a":s})
+    t = Restaurents.objects.all()
+    return render(request,'app/v.html',{"a":s,"y":t})
 @login_required
 def itlist(request):
     st = list(Restaurents.objects.filter(uid_id=request.user.id))
@@ -80,7 +83,7 @@ def itlist(request):
 
 def usrreg(request):
     if request.method=="POST":
-        d = UsgForm(request.POST)
+        d = UsgForm(request.POST,request.FILES)
         if d.is_valid():
             d.save()
             return redirect('/login')
@@ -111,9 +114,92 @@ def ivw(request,a):
     return render(request,'app/iview.html',{'z':s})
 @login_required
 def rolereq(request):
+    p = Rolereq.objects.filter(ud_id=request.user.id).count()
+    if request.method == "POST":
+        k =Rltype(request.POST,request.FILES)
+        if k.is_valid:
+            y = k.save(commit = False)
+            y.ud_id = request.user.id
+            y.uname = request.user.username
+            y.is_checked = 0
+            y.save()
+            return redirect('/')
     k = Rltype()
-    return render(request,'app/rolereq.html',{'d':k})
+    return render(request,'app/rolereq.html',{'d':k,'c':p})
 
 @login_required
 def gveperm(request):
-    return render(request,'app/gvper.html')
+    u = User.objects.all()
+    r = Rolereq.objects.all()
+    d = {}
+    for n in u:
+        for m in r:
+            if n.is_superuser == 1 or n.id != m.ud_id:
+                continue
+            else:
+                d[m.id] = n.username,m.rltype,n.role,n.id,m.id
+    return render(request,'app/gvper.html',{'h':d.values()})
+
+@login_required
+def gvupd(request,t):
+    y=Rolereq.objects.get(ud_id=t)
+    d=User.objects.get(id=t)
+    if request.method == "POST":
+        n = Rlupd(request.POST,instance=d)
+        if n.is_valid():
+            n.save()
+            #d.role = s.rltype
+            y.is_checked = 1
+            y.save()
+            return redirect('/gvper')
+    n = Rlupd(instance=d)
+    return render(request,'app/gvepermissions.html',{'c':n})
+@login_required
+def pfle(request):
+    x = User.objects.get(id=request.user.id)
+    return render(request,'app/profile.html',{'d':x})
+
+@login_required
+def feedback(request):
+    if request.method == "POST":
+        sd = request.POST['snmail'].split(',')
+        sm = request.POST['sub']
+        mg = request.POST['msg']
+        rt = settings.EMAIL_HOST_USER
+        dt = send_mail(sm,mg,rt,sd)
+        if dt == 1:
+            return redirect('/')
+    return render(request,'app/feedback.html')
+
+@login_required
+def reqdel(request,t):
+    r = Rolereq.objects.get(id=t)
+    u = User.objects.get(id=r.ud_id)
+    if request.method == "POST":
+        u.role=1
+        r.delete()
+        u.save()
+        messages.success(request,"Request from {} Deleted Successfully".format(u.username))
+        return redirect('/gvper')
+    return render(request,'app/reqdel.html',{'a':u})
+
+@login_required
+def pfupd(request):
+    d=User.objects.get(id=request.user.id)
+    if request.method=="POST":
+        pf=Pfupd(request.POST,request.FILES,instance=d)
+        if pf.is_valid():
+            pf.save()
+            return redirect('/pfle')
+    pf=Pfupd(instance=d)
+    return render(request,'app/pfleupdate.html',{'u':pf})
+
+@login_required
+def changepwd(request):
+    if request.method == "POST":
+        k = Chgepwd(user=request.user,data=request.POST)
+        if k.is_valid():
+            k.save()
+            return redirect('/login')
+    k = Chgepwd(user=request)
+    return render(request,'app/changepwd.html',{'t':k})

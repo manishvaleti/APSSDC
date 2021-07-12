@@ -76,8 +76,14 @@ WSGI_APPLICATION = 'Restaurent.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'restaurent',
+        'USER':'root',
+        'PASSWORD':'',
+        'HOST':'', 
+        'PORT':'',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
@@ -131,3 +137,9 @@ LOGIN_URL = 'lg'
 LOGIN_REDIRECT_URL = 'hm'
 
 AUTH_USER_MODEL = 'RestApp.User'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''

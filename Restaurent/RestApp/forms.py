@@ -4,7 +4,7 @@ from django.forms.models import model_to_dict
 from RestApp.models import Restaurents,Itemlist,User,Rolereq
 from django import forms
 # from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 class ReForm(forms.ModelForm):
     class Meta:
         model = Restaurents
@@ -68,11 +68,34 @@ class UsgForm(UserCreationForm):
     }))
     class Meta:
         model = User
-        fields = ["username"]
+        fields = ["first_name","last_name","age","email","username","mobilenumber","uimg"]
         widgets = {
             "username":forms.TextInput(attrs={
                 "class":"form-control my-2",
                 "placeholder":"Enter Username",
+            }),
+            "first_name":forms.TextInput(attrs={
+                "class":"form-control my-2",
+                "placeholder":"Enter First Name",
+            }),
+            "last_name":forms.TextInput(attrs={
+                "class":"form-control my-2",
+                "placeholder":"Enter Last name",
+            }),
+            "email":forms.EmailInput(attrs={
+                "class":"form-control my-2",
+                "placeholder":"Enter Email",
+            }),
+            "mobilenumber":forms.TextInput(attrs={
+                "class":"form-control my-2",
+                "placeholder":"Enter Mobile Number",
+            }),
+            "uimg":forms.FileInput(attrs={
+                "class":"form-control my-2",
+            }),
+            "age":forms.NumberInput(attrs={
+                "class":"form-control my-2",
+                "placeholder":"Enter Age",
             })
         }
         
@@ -85,7 +108,72 @@ class Rltype(forms.ModelForm):
             #     "class":"form-control my-2",
             #     "readonly":True,
             # }),
-            "rltype":forms.TextInput(attrs={
+            "rltype":forms.Select(attrs={
+                "class":"form-control my-2",
+                
+            })
+        }
+
+class Rlupd(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["username","role"]
+        widgets= {
+            "username":forms.TextInput(attrs={
+                "class":"form-control my-2",
+                "readonly":True
+            }),
+            "role":forms.Select(attrs={
                 "class":"form-control my-2"
             })
         }
+
+class Pfupd(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["username","first_name","last_name","age","email","mobilenumber","uimg"]
+        widgets = {
+            "username":forms.TextInput(attrs={
+                "class":"form-control my-2",
+                "placeholder":"Enter Username",
+                "readonly":True
+            }),
+            "first_name":forms.TextInput(attrs={
+                "class":"form-control my-2",
+                "placeholder":"Enter First Name",
+            }),
+            "last_name":forms.TextInput(attrs={
+                "class":"form-control my-2",
+                "placeholder":"Enter Last name",
+            }),
+            "email":forms.EmailInput(attrs={
+                "class":"form-control my-2",
+                "placeholder":"Enter Email",
+            }),
+            "mobilenumber":forms.TextInput(attrs={
+                "class":"form-control my-2",
+                "placeholder":"Enter Mobile Number",
+            }),
+            "uimg":forms.FileInput(attrs={
+                "class":" my-2",
+            }),
+            "age":forms.NumberInput(attrs={
+                "class":"form-control my-2",
+                "placeholder":"Enter Age",
+            })
+        }
+
+class Chgepwd(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={
+        "class":"form-control my-2","placeholder": "Enter Old Password"
+    }))
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={
+        "class":"form-control my-2","placeholder": "Enter New Password"
+    }))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        "class":"form-control my-2","placeholder": "Confirm New Password"
+    }))
+    class Meta:
+        model = User
+        fields =  ["old_password","new_password1","new_password2"]   
+         

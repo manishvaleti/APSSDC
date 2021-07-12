@@ -9,11 +9,11 @@ class User(AbstractUser):
     mobilenumber = models.CharField(max_length=10, null=True)
     uimg = models.ImageField(upload_to='ProfilePic/',default='bk.jpg')
     t = [(1,'Guest'),(2,'Manager'),(3,'User')]
-    role = models.CharField(choices=t,max_length=50,default=1)
+    role = models.IntegerField(choices=t,default=1)
 
 class Rolereq(models.Model):
     f = [(2,'Manager'),(3,'User')]
-    rltype = models.CharField(choices = f, max_length=10 )
+    rltype = models.IntegerField(choices = f)
     pfe = models.ImageField(upload_to='Rolereqpics/',default='bk.jpg')
     is_checked = models.BooleanField(default=False)
     uname = models.CharField(max_length=50)
@@ -43,3 +43,4 @@ class Itemlist(models.Model):
     Iavailability=models.CharField(max_length=50,choices=p,default='NA')
     Iimage=models.ImageField(upload_to='ItemImages/',default='bk.jpg')
     rsid = models.ForeignKey(Restaurents, on_delete=models.CASCADE)
+
